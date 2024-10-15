@@ -1,0 +1,16 @@
+<div>
+  <mat-toolbar class="navbar">
+    <button mat-icon-button *ngIf="isAuthenticated()" (click)="toggleMenu()">
+      <mat-icon>menu</mat-icon>
+    </button>
+
+    <span (click)="goToHomePage()" class="myTitle">
+      My Company
+    </span>
+
+    <span class="spacer"></span>
+    <button mat-icon-button *ngIf="isAuthenticated()" (click)="logout()">
+      <mat-icon>logout</mat-icon>
+    </button>
+  </mat-toolbar>
+</div>

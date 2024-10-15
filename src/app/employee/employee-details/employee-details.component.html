@@ -1,0 +1,11 @@
+<!-- src/app/employee-details/employee-details.component.html -->
+<div class="employee-details-container">
+    <h2>Employee Details</h2>
+    <div *ngIf="employee">
+      <p><strong>Name:</strong> {{ employee.name }}</p>
+      <p><strong>Email:</strong> {{ employee.email }}</p>
+      <p><strong>Department:</strong> {{ employee.department }}</p>
+      <p><strong>Position:</strong> {{ employee.position }}</p>
+    </div>
+  </div>
+  

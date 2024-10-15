@@ -1,0 +1,31 @@
+<div class="full-page-container">
+  <div class="form-container"  *ngIf="!isLoading">
+    <h2>Edit Applicant</h2>
+    <form [formGroup]="applicantForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" formControlName="name">
+        <div *ngIf="applicantForm.get('name')!.invalid && applicantForm.get('name')!.touched" class="error">
+          Name is required
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" formControlName="email">
+        <div *ngIf="applicantForm.get('email')!.invalid && applicantForm.get('email')!.touched" class="error">
+          Valid email is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="mobileNumber">Mobile Number</label>
+        <input type="text" id="mobileNumber" formControlName="mobileNumber">
+        <div *ngIf="applicantForm.get('mobileNumber')!.invalid && applicantForm.get('mobileNumber')!.touched"
+             class="error">
+          Mobile Number is required
+        </div>
+      </div>
+      <button type="submit" [disabled]="applicantForm.invalid" class="btn">Update Applicant</button>
+    </form>
+  </div>
+</div>

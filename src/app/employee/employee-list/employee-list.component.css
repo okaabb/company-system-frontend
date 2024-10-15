@@ -1,0 +1,38 @@
+/* src/app/employee-list/employee-list.component.css */
+.mat-raised-button{
+    background-color: #f16e00;
+
+}
+.list-container {
+    margin: 20px;
+}
+
+.list-container th {
+    background-color: #f16e00;
+    color: black;
+}
+
+.mat-header-cell {
+    background-color: #f16e00;
+    color: white;
+    font-weight: bold;
+}
+
+.mat-cell,
+.mat-footer-cell,
+.mat-header-cell {
+    text-align: center;
+}
+
+
+.mat-row:hover {
+    background-color: #f1f1f1;
+}
+
+.add-employee-btn {
+    margin-bottom: 20px;
+    float: right;
+    background-color: #f16e00;
+    color: white;
+
+}

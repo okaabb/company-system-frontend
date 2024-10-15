@@ -1,0 +1,49 @@
+<!-- src/app/employee-list/employee-list.component.html -->
+<div class="list-container">
+  <button mat-raised-button color="primary" class="add-employee-btn" (click)="addEmployee()">Add Employee</button>
+  <h2>Employee List</h2>
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <!-- ID Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> ID</th>
+      <td mat-cell *matCellDef="let employee"> {{ employee.id }}</td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Name</th>
+      <td mat-cell *matCellDef="let employee"> {{ employee.name }}</td>
+    </ng-container>
+
+    <!-- Email Column -->
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef> Email</th>
+      <td mat-cell *matCellDef="let employee"> {{ employee.email }}</td>
+    </ng-container>
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="position">
+      <th mat-header-cell *matHeaderCellDef> Position</th>
+      <td mat-cell *matCellDef="let employee"> {{ employee.position }}</td>
+    </ng-container>
+
+    <!-- Department Column -->
+    <ng-container matColumnDef="department">
+      <th mat-header-cell *matHeaderCellDef> Department</th>
+      <td mat-cell *matCellDef="let employee"> {{ employee.department }}</td>
+    </ng-container>
+
+    <!-- Actions Column -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Actions</th>
+      <td mat-cell *matCellDef="let employee">
+        <button mat-button (click)="editEmployee(employee.id)" style="color: #f16e00;">Edit</button>
+        <button mat-button (click)="deleteEmployee(employee.id)" style="color: #f16e00;">Delete</button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="viewEmployeeDetails(row)"></tr>
+  </table>
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+</div>

@@ -1,0 +1,213 @@
+/* Global Styles */
+
+body {
+  background-color: #f8f9fa; /* Light grey background for the app */
+  color: #000; /* Black text for readability */
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  flex: 1;
+}
+
+
+/* Login Component Styles */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 1s ease-in-out;
+}
+
+.content {
+  min-height: calc(100vh - 50px); /* Adjust height minus footer height */
+}
+
+footer {
+  height: 50px; /* Set a fixed height for the footer */
+  background-color: #f1f1f1; /* Optional: footer background color */
+  bottom: 0; /* Aligns at the bottom */
+  display: flex;
+  justify-content: center;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.login-form {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  width: 100%;
+  animation: slideIn 0.5s ease-in-out;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-20px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.login-form h2 {
+  margin-bottom: 1.5rem;
+}
+
+.login-form .form-group {
+  margin-bottom: 1rem;
+}
+
+.login-form .form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.login-form .form-group input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  transition: border-color 0.3s;
+  box-sizing: border-box;
+}
+
+.login-form .form-group input:focus {
+  outline: none;
+  border-color: #f16e00;
+}
+
+.login-form .error {
+  color: red;
+  font-size: 0.875rem;
+}
+
+.login-form button {
+  width: 100%;
+  background-color: #f16e00;
+  color: white;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.login-form button:hover {
+  background-color: #d15c00;
+}
+
+.login-form button[disabled] {
+  background-color: #d15c00;
+}
+
+/* Employee List Component Styles */
+.list-container {
+  padding: 2rem;
+  animation: fadeIn 1s ease-in-out;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.header h2 {
+  margin: 0;
+}
+
+.add-button {
+  background-color: #f16e00;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.add-button:hover {
+  background-color: #d15c00;
+}
+
+.list-container table {
+  width: 100%;
+  margin-bottom: 1rem;
+  background-color: white;
+  border-collapse: collapse;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 1s ease-in-out;
+}
+
+.list-container th,
+.list-container td {
+  padding: 0.75rem;
+  vertical-align: middle;
+  border-top: 1px solid #dee2e6;
+  color: #000; /* Black text inside the table for readability */
+  text-align: center; /* Center the text */
+  transition: background-color 0.3s;
+}
+
+.list-container th {
+  background-color: #f16e00;
+  color: #fff;
+}
+
+.list-container thead th {
+  vertical-align: bottom;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.list-container tbody tr:hover {
+  background-color: #f2f2f2;
+}
+
+.list-container tbody + tbody {
+  border-top: 2px solid #dee2e6;
+}
+
+.list-container .btn {
+  background-color: #f16e00;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-right: 0.5rem;
+}
+
+.list-container .btn:hover {
+  background-color: #d15c00;
+}
+
+.list-container table button {
+  margin-right: 0.5rem;
+}
+
+
+/*html, body {*/
+/*  height: 100%;*/
+/*}*/
+
+/*body {*/
+/*  margin: 0;*/
+/*  font-family: Roboto, "Helvetica Neue", sans-serif;*/
+/*}*/
+
+/*html, body { height: 100%; }*/
+/*body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }*/

@@ -1,0 +1,12 @@
+.navbar {
+  background: #0a093e;
+  color: rgb(255, 255, 255);
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.myTitle:hover{
+  cursor: pointer;
+}

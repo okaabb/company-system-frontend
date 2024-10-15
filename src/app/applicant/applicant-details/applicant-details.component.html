@@ -1,0 +1,9 @@
+<!-- src/app/applicant-details/applicant-details.component.html -->
+<div class="applicant-details-container">
+  <h2>Applicant Details</h2>
+  <div *ngIf="applicant">
+    <p><strong>Name:</strong> {{ applicant.name }}</p>
+    <p><strong>Email:</strong> {{ applicant.email }}</p>
+    <p><strong>Mobile Number:</strong> {{ applicant.mobileNumber }}</p>
+  </div>
+</div>

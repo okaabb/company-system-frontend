@@ -1,0 +1,63 @@
+<!-- src/app/applicant-list/applicant-list.component.html -->
+<div class="list-container">
+  <button mat-raised-button color="primary" class="add-applicant-btn" (click)="addApplicant()">Add Applicant</button>
+  <h2>Applicants List</h2>
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> ID
+        <div>
+          <mat-form-field>
+            <input matInput class="form-field" placeholder="Id Filter" (keyup)="filterByColumn($event, 'id')">
+          </mat-form-field>
+        </div>
+      </th>
+      <td mat-cell *matCellDef="let applicant"> {{ applicant.id }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Name
+        <div>
+          <mat-form-field>
+            <input matInput class="form-field" placeholder="Name Filter" (keyup)="filterByColumn($event, 'name')">
+          </mat-form-field>
+        </div>
+      </th>
+      <td mat-cell *matCellDef="let applicant"> {{ applicant.name }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef> Email
+        <div>
+          <mat-form-field>
+            <input matInput class="form-field" placeholder="Email Filter" (keyup)="filterByColumn($event, 'email')">
+          </mat-form-field>
+        </div>
+      </th>
+      <td mat-cell *matCellDef="let applicant"> {{ applicant.email }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="mobile number">
+      <th mat-header-cell *matHeaderCellDef> Mobile Number
+        <div>
+          <mat-form-field>
+            <input matInput class="form-field" placeholder="Mobile Number Filter"
+                   (keyup)="filterByColumn($event, 'mobileNumber')">
+          </mat-form-field>
+        </div>
+      </th>
+      <td mat-cell *matCellDef="let applicant"> {{ applicant.mobileNumber }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Actions</th>
+      <td mat-cell *matCellDef="let applicant">
+        <button mat-button (click)="editApplicant(applicant.id)" style="color: #f16e00;">Edit</button>
+        <button mat-button (click)="deleteApplicant(applicant.id)" style="color: #f16e00;">Delete</button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="viewApplicantDetails(row)"></tr>
+  </table>
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+</div>

@@ -1,0 +1,24 @@
+<app-error-modal *ngIf="(error$ | async) as errorMessage" title="An error occurred!"
+                 [message]="errorMessage"></app-error-modal>
+<app-navbar></app-navbar>
+<mat-sidenav-container>
+  <mat-sidenav-content>
+    <div>
+      <main class="content">
+        <router-outlet></router-outlet>
+      </main>
+    </div>
+  </mat-sidenav-content>
+  <mat-sidenav [opened]="this.navbar?this.navbar.showMenu:true" mode="side">
+    <div class="side-bar">
+      <button mat-button (click)="listApplicants()">Applicant</button>
+      <button mat-button (click)="listEmployees()">Employee</button>
+    </div>
+  </mat-sidenav>
+</mat-sidenav-container>
+
+
+
+
+
+
