@@ -17,59 +17,61 @@ import {EmployeeDetailsComponent} from './employee/employee-details/employee-det
 import {ListApplicantComponent} from './applicant/applicant-list/list-applicant.component';
 import {HomePageComponent} from './home-page/home-page.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-import { ApplicantAddComponent } from './applicant/applicant-add/applicant-add.component';
-import { ApplicantDetailsComponent } from './applicant/applicant-details/applicant-details.component';
-import { ApplicantEditComponent } from './applicant/applicant-edit/applicant-edit.component';
-import { ApplicantRemoveComponent } from './applicant/applicant-remove/applicant-remove.component';
+import {ApplicantAddComponent} from './applicant/applicant-add/applicant-add.component';
+import {ApplicantDetailsComponent} from './applicant/applicant-details/applicant-details.component';
+import {ApplicantEditComponent} from './applicant/applicant-edit/applicant-edit.component';
+import {ApplicantRemoveComponent} from './applicant/applicant-remove/applicant-remove.component';
 import {ModalComponent} from "./shared/modal/modal.component";
 import {ErrorModalComponent} from "./shared/modal/error-modal/error-modal.component";
 import {MatSelectModule} from "@angular/material/select";
 import {MatInputModule} from "@angular/material/input";
 import {HttpTokenInterceptor} from "./interceptor/http-token.interceptor";
-import { LogoutComponent } from './logout/logout.component';
+import {LogoutComponent} from './logout/logout.component';
 import {MatToolbarModule} from "@angular/material/toolbar";
-import { NavbarComponent } from './navbar/navbar.component';
+import {NavbarComponent} from './navbar/navbar.component';
 import {MatSidenavModule} from "@angular/material/sidenav";
+import {EmployeeRemoveComponent} from "./employee/employee-remove/employee-remove.component";
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent,
-    EmployeeListComponent,
-    EmployeeAddComponent,
-    EmployeeEditComponent,
-    EmployeeDetailsComponent,
-    ListApplicantComponent,
-    HomePageComponent,
-    ApplicantAddComponent,
-    ApplicantDetailsComponent,
-    ApplicantEditComponent,
-    ApplicantRemoveComponent,
-    LogoutComponent,
-    NavbarComponent
-  ],
-  imports: [
-    MatTableModule,
-    MatButtonModule,
-    MatIconModule,
-    MatPaginatorModule,
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    ReactiveFormsModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    ModalComponent,
-    ErrorModalComponent,
-    MatSelectModule,
-    MatInputModule,
-    MatToolbarModule,
-    MatSidenavModule
-  ],
-  providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: HttpTokenInterceptor, multi: true }
-  ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        LoginComponent,
+        EmployeeListComponent,
+        EmployeeAddComponent,
+        EmployeeEditComponent,
+        EmployeeDetailsComponent,
+        EmployeeRemoveComponent,
+        ListApplicantComponent,
+        HomePageComponent,
+        ApplicantAddComponent,
+        ApplicantDetailsComponent,
+        ApplicantEditComponent,
+        ApplicantRemoveComponent,
+        LogoutComponent,
+        NavbarComponent
+    ],
+    imports: [
+        MatTableModule,
+        MatButtonModule,
+        MatIconModule,
+        MatPaginatorModule,
+        BrowserModule,
+        AppRoutingModule,
+        FormsModule,
+        ReactiveFormsModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
+        ModalComponent,
+        ErrorModalComponent,
+        MatSelectModule,
+        MatInputModule,
+        MatToolbarModule,
+        MatSidenavModule
+    ],
+    providers: [
+        {provide: HTTP_INTERCEPTORS, useClass: HttpTokenInterceptor, multi: true}
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule {
 }

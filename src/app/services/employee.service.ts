@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {catchError, Observable} from 'rxjs';
-import {EmployeeComponentModel, EmployeePaginatedResponse} from "../models/employee.model";
+import {ListEmployee, EmployeePaginatedResponse} from "../models/employee.model";
 import {HttpClient, HttpHeaders, HttpResponse} from "@angular/common/http";
 import {EmployeeAddComponent} from "../employee/employee-add/employee-add.component";
 import {ErrorService} from "./error.service";
@@ -46,7 +46,7 @@ export class EmployeeService {
     getEmployeeById(id: number) {
         const url = `${this.baseUrl}/${id}`;
         console.log(url);
-        return this.httpClient.get<EmployeeComponentModel>(url, {observe: 'response'}).pipe(
+        return this.httpClient.get<ListEmployee>(url, {observe: 'response'}).pipe(
             catchError(error => {
                 this.errorService.handleError(error);
                 return [];
@@ -55,14 +55,14 @@ export class EmployeeService {
 
     addEmployee(newEmployee: EmployeeAddComponent) {
         const url = `${this.baseUrl}`;
-        return this.httpClient.post<EmployeeComponentModel>(url, newEmployee, {observe: 'response'}).pipe(
+        return this.httpClient.post<ListEmployee>(url, newEmployee, {observe: 'response'}).pipe(
             catchError(error => {
                 this.errorService.handleError(error);
                 return [];
             }));
     }
 
-    updateEmployee(employeeId: number, updatedEmployee: EmployeeComponentModel) {
+    updateEmployee(employeeId: number, updatedEmployee: ListEmployee) {
         const url = `${this.baseUrl}/${employeeId}`;
         updatedEmployee.id = Number(employeeId);
         return this.httpClient.put(url, updatedEmployee).pipe(

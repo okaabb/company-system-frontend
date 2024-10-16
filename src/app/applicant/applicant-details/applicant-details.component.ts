@@ -1,5 +1,4 @@
 import {Component, OnInit, signal} from '@angular/core';
-import {Employee} from "../../models/employee.model";
 import {ActivatedRoute} from "@angular/router";
 import {ApplicantService} from "../../services/applicant.service";
 import {ApplicantComponentModel} from "../../models/applicant.model";

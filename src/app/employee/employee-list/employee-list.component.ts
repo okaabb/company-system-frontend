@@ -1,57 +1,67 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
-import { EmployeeService } from '../../services/employee.service';
-import { Employee } from '../../models/employee.model';
-import { Router } from '@angular/router';
+import {Component, OnInit, signal, ViewChild} from '@angular/core';
+import {MatTableDataSource} from '@angular/material/table';
+import {MatPaginator} from '@angular/material/paginator';
+import {EmployeeService} from '../../services/employee.service';
+import {ListEmployee} from '../../models/employee.model';
+import {Router} from '@angular/router';
+import {HttpResponse} from "@angular/common/http";
+import {EmployeePaginatedResponse} from "../../models/employee.model";
 
 @Component({
-  selector: 'app-employee-list',
-  templateUrl: './employee-list.component.html',
-  styleUrls: ['./employee-list.component.css']
+    selector: 'app-employee-list',
+    templateUrl: './employee-list.component.html',
+    styleUrls: ['./employee-list.component.css']
 })
 export class EmployeeListComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'name', 'email', 'position', 'department', 'actions'];
-  dataSource = new MatTableDataSource<Employee>();
-  totalRecords = 0;
-  pageSize = 10;
-  pageIndex = 0;
+    displayedColumns: string[] = ['id', 'name', 'email', 'position', 'department', 'actions'];
+    dataSource = new MatTableDataSource<ListEmployee>();
+    totalRecords = 0;
+    pageSize = 10;
+    pageIndex = 0;
+    error = signal('');
 
-  @ViewChild(MatPaginator)
-  paginator!: MatPaginator;
+    @ViewChild(MatPaginator)
+    paginator!: MatPaginator;
 
-  constructor(private employeeService: EmployeeService, private router: Router) { }
+    constructor(private employeeService: EmployeeService, private router: Router) {
+    }
 
-  ngOnInit(): void {
-    this.loadEmployees();
-    this.dataSource.paginator = this.paginator;
-  }
+    ngOnInit(): void {
+        this.loadEmployees(this.pageIndex, this.pageSize);
+        this.dataSource.paginator = this.paginator;
+    }
 
-  loadEmployees(): void {
-    const { data, total } = this.employeeService.getEmployees(this.pageIndex, this.pageSize);
-    this.dataSource.data = data;
-    this.totalRecords = total;
-  }
+    loadEmployees(pageIndex: number, pageSize: number): void {
+        this.employeeService.getAllEmployees(pageIndex, pageSize).subscribe({
+            next: (resData: HttpResponse<EmployeePaginatedResponse>) => {
+                this.dataSource.data = resData.body?.content || [];
+                this.totalRecords = resData.body?.totalElements || 0;
+                this.dataSource.paginator = this.paginator;
+            }, error: (error: Error) => {
+                this.error.set(error.message);
+            },
+        });
+    }
 
-  onPaginateChange(event: any): void {
-    this.pageIndex = event.pageIndex;
-    this.pageSize = event.pageSize;
-    this.loadEmployees();
-  }
+    onPaginateChange(event: any): void {
+        this.pageIndex = event.pageIndex;
+        this.pageSize = event.pageSize;
+        this.loadEmployees(this.pageIndex, this.pageSize);
+    }
 
-  addEmployee() {
-    this.router.navigate(['/employees/add']);
-  }
+    addEmployee() {
+        this.router.navigate(['/employees/add']);
+    }
 
-  editEmployee(id: number): void {
-    this.router.navigate(['/employees/edit', id]);
-  }
+    editEmployee(id: number): void {
+        this.router.navigate(['/employees/edit', id]);
+    }
 
-  deleteEmployee(id: number): void {
-    this.router.navigate(['/employees/remove', id]);
-  }
+    deleteEmployee(id: number): void {
+        this.router.navigate(['/employees/remove', id]);
+    }
 
-  viewEmployeeDetails(row: any): void {
-    this.router.navigate(['/employees/', row.id]);
-  }
+    viewEmployeeDetails(row: any): void {
+        this.router.navigate(['/employees/', row.id]);
+    }
 }

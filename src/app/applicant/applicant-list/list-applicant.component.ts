@@ -15,7 +15,7 @@ export class ListApplicantComponent implements OnInit {
   displayedColumns: string[] = ['id', 'name', 'email', 'mobile number', 'actions'];
   dataSource = new MatTableDataSource<ApplicantComponentModel>();
   totalRecords: bigint | number = 0;
-  pageSize: number = 10;
+  pageSize: number = 20;
   pageIndex: number = 0;
   error = signal('');
   currentFilterColumn: string = 'id';
