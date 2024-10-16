@@ -1,60 +1,83 @@
-import { Injectable } from '@angular/core';
-import { Employee } from '../models/employee.model';
-import { delay, of, tap } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {catchError, Observable} from 'rxjs';
+import {EmployeeComponentModel, EmployeePaginatedResponse} from "../models/employee.model";
+import {HttpClient, HttpHeaders, HttpResponse} from "@angular/common/http";
+import {EmployeeAddComponent} from "../employee/employee-add/employee-add.component";
+import {ErrorService} from "./error.service";
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class EmployeeService {
+    private baseUrl = '/api/employees';
 
-  private employees: Employee[] = [];
-
-  constructor() {
-    this.generateEmployees();
-  }
-
-  getEmployees(pageIndex: number, pageSize: number): { data: Employee[], total: number } {
-    const startIndex = pageIndex * pageSize;
-    const endIndex = startIndex + pageSize;
-    const data = this.employees.slice(startIndex, endIndex);
-    const total = this.employees.length;
-    return { data, total };
-  }
-
-  addEmployee(employee: any) {
-    return of(employee).pipe(
-      delay(5000),
-      tap(newEmployee => this.employees.push(newEmployee))
-    );
-  }
-
-  getEmployeeById(id: number) {
-    return this.employees.find(emp => emp.id == id);
-  }
-
-  updateEmployee(id: number, updatedEmployee: any) {
-    const index = this.employees.findIndex(emp => emp.id === id);
-    if (index !== -1) {
-      this.employees[index] = { ...updatedEmployee, id };
+    constructor(private httpClient: HttpClient, private errorService: ErrorService) {
     }
-  }
 
-  deleteEmployee(id: number): void {
-    this.employees = this.employees.filter(emp => emp.id !== id);
-  }
-
-  generateEmployees(): void {
-    const departments = ['Development', 'IT', 'HR', 'PO', 'Management'];
-    const positions = ['Fresh', 'Mid-level', 'Senior'];
-    for (let i = 1; i <= 100; i++) {
-      const employee: Employee = {
-        id: i,
-        name: `Employee ${i}`,
-        email: `employee${i}@company.com`,
-        department: departments[Math.floor(Math.random() * departments.length)],
-        position: positions[Math.floor(Math.random() * positions.length)],
-      };
-      this.employees.push(employee);
+    getAllEmployees(pageIndex: number, pageSize: number): Observable<HttpResponse<EmployeePaginatedResponse>> {
+        const url = `${this.baseUrl}?page=${pageIndex}&size=${pageSize}`;
+        return this.httpClient.get<EmployeePaginatedResponse>(url, {observe: 'response'}).pipe(
+            catchError(error => {
+                this.errorService.handleError(error);
+                return [];
+            }));
     }
-  }
+
+    filterEmployees(filters: Map<string, string>, pageIndex: number, pageSize: number) {
+        const queryParams = new URLSearchParams();
+        queryParams.append('page', pageIndex.toString());
+        queryParams.append('size', pageSize.toString());
+
+        filters.forEach((value, key) => {
+            if (value.length > 0)
+                queryParams.append(key, value);
+        });
+
+        const url = `${this.baseUrl}?${queryParams.toString()}`;
+
+        return this.httpClient.get<EmployeePaginatedResponse>(url, {observe: 'response'}).pipe(
+            catchError(error => {
+                this.errorService.handleError(error);
+                return [];
+            })
+        );
+    }
+
+    getEmployeeById(id: number) {
+        const url = `${this.baseUrl}/${id}`;
+        console.log(url);
+        return this.httpClient.get<EmployeeComponentModel>(url, {observe: 'response'}).pipe(
+            catchError(error => {
+                this.errorService.handleError(error);
+                return [];
+            }));
+    }
+
+    addEmployee(newEmployee: EmployeeAddComponent) {
+        const url = `${this.baseUrl}`;
+        return this.httpClient.post<EmployeeComponentModel>(url, newEmployee, {observe: 'response'}).pipe(
+            catchError(error => {
+                this.errorService.handleError(error);
+                return [];
+            }));
+    }
+
+    updateEmployee(employeeId: number, updatedEmployee: EmployeeComponentModel) {
+        const url = `${this.baseUrl}/${employeeId}`;
+        updatedEmployee.id = Number(employeeId);
+        return this.httpClient.put(url, updatedEmployee).pipe(
+            catchError(error => {
+                this.errorService.handleError(error);
+                return [];
+            }));
+    }
+
+    deleteEmployee(id: number) {
+        const url = `${this.baseUrl}/${id}`;
+        return this.httpClient.delete(url).pipe(
+            catchError(error => {
+                this.errorService.handleError(error);
+                return [];
+            }));
+    }
 }

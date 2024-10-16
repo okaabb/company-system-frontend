@@ -40,18 +40,18 @@ export class EmployeeListComponent implements OnInit {
   }
 
   addEmployee() {
-    this.router.navigate(['/add']);
+    this.router.navigate(['/employees/add']);
   }
 
   editEmployee(id: number): void {
-    this.router.navigate(['/edit', id]);
+    this.router.navigate(['/employees/edit', id]);
   }
 
   deleteEmployee(id: number): void {
-    this.employeeService.deleteEmployee(id);
+    this.router.navigate(['/employees/remove', id]);
   }
 
   viewEmployeeDetails(row: any): void {
-    this.router.navigate(['/details', row.id]);
+    this.router.navigate(['/employees/', row.id]);
   }
 }

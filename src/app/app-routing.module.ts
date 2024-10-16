@@ -11,26 +11,28 @@ import {ApplicantDetailsComponent} from "./applicant/applicant-details/applicant
 import {ApplicantAddComponent} from "./applicant/applicant-add/applicant-add.component";
 import {ApplicantEditComponent} from "./applicant/applicant-edit/applicant-edit.component";
 import {ApplicantRemoveComponent} from "./applicant/applicant-remove/applicant-remove.component";
+import {EmployeeRemoveComponent} from "./employee/employee-remove/employee-remove.component";
 
 const routes: Routes = [
-  {path: 'login', component: LoginComponent},
-  {path: 'home', component: HomePageComponent},
-  {path: 'applicants', component: ListApplicantComponent},
-  {path: 'applicants/add', component: ApplicantAddComponent},
-  {path: 'applicants/remove/:id', component: ApplicantRemoveComponent},
-  {path: 'applicants/edit/:id', component: ApplicantEditComponent},
-  {path: 'applicants/:id', component: ApplicantDetailsComponent},
-  {path: 'employees', component: EmployeeListComponent},
-  {path: 'employees/add', component: EmployeeAddComponent},
-  {path: 'employees/edit/:id', component: EmployeeEditComponent},
-  {path: 'employees/:id', component: EmployeeDetailsComponent},
-  {path: '', redirectTo: '/login', pathMatch: 'full'},
-  {path: '**', redirectTo: '/login'}
+    {path: 'login', component: LoginComponent},
+    {path: 'home', component: HomePageComponent},
+    {path: 'applicants', component: ListApplicantComponent},
+    {path: 'applicants/add', component: ApplicantAddComponent},
+    {path: 'applicants/remove/:id', component: ApplicantRemoveComponent},
+    {path: 'applicants/edit/:id', component: ApplicantEditComponent},
+    {path: 'applicants/:id', component: ApplicantDetailsComponent},
+    {path: 'employees', component: EmployeeListComponent},
+    {path: 'employees/add', component: EmployeeAddComponent},
+    {path: 'employees/remove/:id', component: EmployeeRemoveComponent},
+    {path: 'employees/edit/:id', component: EmployeeEditComponent},
+    {path: 'employees/:id', component: EmployeeDetailsComponent},
+    {path: '', redirectTo: '/login', pathMatch: 'full'},
+    {path: '**', redirectTo: '/login'}
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forRoot(routes)],
+    exports: [RouterModule]
 })
 export class AppRoutingModule {
 }

@@ -1,8 +1,14 @@
-export interface Employee {
+export interface EmployeeComponentModel {
     id: number;
     name: string;
     email: string;
-    position: string;
-    department: string;
-  }
-  
+    mobileNumber: string;
+}
+
+export interface EmployeePaginatedResponse {
+    content: EmployeeComponentModel[];
+    pageNumber: number;
+    pageSize: number;
+    totalElements: number;
+    totalPages: number;
+}
