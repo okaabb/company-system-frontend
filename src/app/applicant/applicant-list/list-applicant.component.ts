@@ -1,6 +1,6 @@
 import {Component, OnInit, signal, ViewChild} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
-import {MatPaginator} from "@angular/material/paginator";
+import {MatPaginator, PageEvent} from "@angular/material/paginator";
 import {Router} from "@angular/router";
 import {ApplicantComponentModel, ApplicantPaginatedResponse} from "../../models/applicant.model";
 import {ApplicantService} from "../../services/applicant.service";
@@ -14,8 +14,8 @@ import {HttpResponse} from "@angular/common/http";
 export class ListApplicantComponent implements OnInit {
   displayedColumns: string[] = ['id', 'name', 'email', 'mobile number', 'actions'];
   dataSource = new MatTableDataSource<ApplicantComponentModel>();
-  totalRecords: bigint | number = 0;
-  pageSize: number = 20;
+  totalRecords: number = 0;
+  pageSize: number = 5;
   pageIndex: number = 0;
   error = signal('');
   currentFilterColumn: string = 'id';
@@ -28,26 +28,24 @@ export class ListApplicantComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadApplicants(this.pageIndex, this.pageSize);
-    this.dataSource.paginator = this.paginator;
+    this.loadApplicants();
   }
 
-  loadApplicants(pageIndex: number, pageSize: number): void {
-    this.applicantService.getAllApplicants(pageIndex, pageSize).subscribe({
+  loadApplicants(): void {
+    this.applicantService.getAllApplicants(this.pageIndex, this.pageSize).subscribe({
       next: (resData: HttpResponse<ApplicantPaginatedResponse>) => {
         this.dataSource.data = resData.body?.content || [];
         this.totalRecords = resData.body?.totalElements || 0;
-        this.dataSource.paginator = this.paginator;
       }, error: (error: Error) => {
         this.error.set(error.message);
       },
     });
   }
 
-  onPaginateChange(event: any): void {
+  onPaginateChange(event: PageEvent): void {
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
-    this.loadApplicants(this.pageIndex, this.pageSize);
+    this.loadApplicants();
   }
 
   addApplicant() {

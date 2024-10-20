@@ -1,6 +1,6 @@
 import {Component, OnInit, signal, ViewChild} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
-import {MatPaginator} from '@angular/material/paginator';
+import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {EmployeeService} from '../../services/employee.service';
 import {ListEmployee} from '../../models/employee.model';
 import {Router} from '@angular/router';
@@ -15,8 +15,8 @@ import {EmployeePaginatedResponse} from "../../models/employee.model";
 export class EmployeeListComponent implements OnInit {
     displayedColumns: string[] = ['id', 'name', 'email', 'position', 'department', 'actions'];
     dataSource = new MatTableDataSource<ListEmployee>();
-    totalRecords = 0;
-    pageSize = 10;
+    totalRecords:number = 0;
+    pageSize = 5;
     pageIndex = 0;
     error = signal('');
 
@@ -27,26 +27,24 @@ export class EmployeeListComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.loadEmployees(this.pageIndex, this.pageSize);
-        this.dataSource.paginator = this.paginator;
+        this.loadEmployees();
     }
 
-    loadEmployees(pageIndex: number, pageSize: number): void {
-        this.employeeService.getAllEmployees(pageIndex, pageSize).subscribe({
+    loadEmployees(): void {
+        this.employeeService.getAllEmployees(this.pageIndex, this.pageSize).subscribe({
             next: (resData: HttpResponse<EmployeePaginatedResponse>) => {
                 this.dataSource.data = resData.body?.content || [];
                 this.totalRecords = resData.body?.totalElements || 0;
-                this.dataSource.paginator = this.paginator;
             }, error: (error: Error) => {
                 this.error.set(error.message);
             },
         });
     }
 
-    onPaginateChange(event: any): void {
+    onPaginateChange(event: PageEvent): void {
         this.pageIndex = event.pageIndex;
         this.pageSize = event.pageSize;
-        this.loadEmployees(this.pageIndex, this.pageSize);
+        this.loadEmployees();
     }
 
     addEmployee() {
