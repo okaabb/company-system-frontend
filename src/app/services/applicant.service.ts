@@ -14,16 +14,16 @@ export class ApplicantService {
   constructor(private httpClient: HttpClient, private errorService: ErrorService) {
   }
 
-  getAllApplicants(pageIndex: number, pageSize: number): Observable<HttpResponse<ApplicantPaginatedResponse>> {
-    const url = `${this.baseUrl}?page=${pageIndex}&size=${pageSize}`;
-    return this.httpClient.get<ApplicantPaginatedResponse>(url, {observe: 'response'}).pipe(
-      catchError(error => {
-        this.errorService.handleError(error);
-        return [];
-      }));
-  }
+  // getAllApplicants(pageIndex: number, pageSize: number): Observable<HttpResponse<ApplicantPaginatedResponse>> {
+  //   const url = `${this.baseUrl}?page=${pageIndex}&size=${pageSize}`;
+  //   return this.httpClient.get<ApplicantPaginatedResponse>(url, {observe: 'response'}).pipe(
+  //     catchError(error => {
+  //       this.errorService.handleError(error);
+  //       return [];
+  //     }));
+  // }
 
-  filterApplicants(filters: Map<string, string>, pageIndex: number, pageSize: number) {
+    getAllApplicants(filters: Map<string, string>, pageIndex: number, pageSize: number) {
     const queryParams = new URLSearchParams();
     queryParams.append('page', pageIndex.toString());
     queryParams.append('size', pageSize.toString());

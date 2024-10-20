@@ -6,6 +6,7 @@ import {ListEmployee} from '../../models/employee.model';
 import {Router} from '@angular/router';
 import {HttpResponse} from "@angular/common/http";
 import {EmployeePaginatedResponse} from "../../models/employee.model";
+import {ApplicantPaginatedResponse} from "../../models/applicant.model";
 
 @Component({
     selector: 'app-employee-list',
@@ -22,6 +23,8 @@ export class EmployeeListComponent implements OnInit {
 
     @ViewChild(MatPaginator)
     paginator!: MatPaginator;
+    private currentFilterColumn: string;
+    private map: any;
 
     constructor(private employeeService: EmployeeService, private router: Router) {
     }
@@ -61,5 +64,24 @@ export class EmployeeListComponent implements OnInit {
 
     viewEmployeeDetails(row: any): void {
         this.router.navigate(['/employees/', row.id]);
+    }
+
+    filterByColumn(event: Event, column: string): void {
+        const input = event.target as HTMLInputElement;
+        const filterValue = input.value.trim().toLowerCase();
+
+        this.currentFilterColumn = column;
+
+        this.map.set(this.currentFilterColumn, filterValue);
+
+        this.employeeService.filterEmployees(this.map, this.pageIndex, this.pageSize).subscribe({
+            next: (resData: HttpResponse<EmployeePaginatedResponse>) => {
+                this.dataSource.data = resData.body?.content || [];
+                this.totalRecords = resData.body?.totalElements || 0;
+                this.dataSource.paginator = this.paginator;
+            }, error: (error: Error) => {
+                this.error.set(error.message);
+            },
+        });
     }
 }

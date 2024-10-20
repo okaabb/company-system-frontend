@@ -31,6 +31,7 @@ import {MatToolbarModule} from "@angular/material/toolbar";
 import {NavbarComponent} from './navbar/navbar.component';
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {EmployeeRemoveComponent} from "./employee/employee-remove/employee-remove.component";
+import { ApplicationComponent } from './application/application.component';
 
 @NgModule({
     declarations: [
@@ -48,7 +49,8 @@ import {EmployeeRemoveComponent} from "./employee/employee-remove/employee-remov
         ApplicantEditComponent,
         ApplicantRemoveComponent,
         LogoutComponent,
-        NavbarComponent
+        NavbarComponent,
+        ApplicationComponent
     ],
     imports: [
         MatTableModule,

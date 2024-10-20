@@ -7,80 +7,70 @@ import {ApplicantService} from "../../services/applicant.service";
 import {HttpResponse} from "@angular/common/http";
 
 @Component({
-  selector: 'app-list-applicant',
-  templateUrl: './list-applicant.component.html',
-  styleUrls: ['./list-applicant.component.css']
+    selector: 'app-list-applicant',
+    templateUrl: './list-applicant.component.html',
+    styleUrls: ['./list-applicant.component.css']
 })
 export class ListApplicantComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'name', 'email', 'mobile number', 'actions'];
-  dataSource = new MatTableDataSource<ApplicantComponentModel>();
-  totalRecords: number = 0;
-  pageSize: number = 5;
-  pageIndex: number = 0;
-  error = signal('');
-  currentFilterColumn: string = 'id';
-  map = new Map<string, string>();
+    displayedColumns: string[] = ['id', 'name', 'email', 'mobile number', 'actions'];
+    dataSource = new MatTableDataSource<ApplicantComponentModel>();
+    totalRecords: number = 0;
+    pageSize: number = 5;
+    pageIndex: number = 0;
+    error = signal('');
+    currentFilterColumn: string = 'id';
+    map = new Map<string, string>();
 
-  @ViewChild(MatPaginator)
-  paginator!: MatPaginator;
+    @ViewChild(MatPaginator)
+    paginator!: MatPaginator;
 
-  constructor(private applicantService: ApplicantService, private router: Router) {
-  }
+    constructor(private applicantService: ApplicantService, private router: Router) {
+    }
 
-  ngOnInit(): void {
-    this.loadApplicants();
-  }
+    ngOnInit(): void {
+        this.loadApplicants();
+    }
 
-  loadApplicants(): void {
-    this.applicantService.getAllApplicants(this.pageIndex, this.pageSize).subscribe({
-      next: (resData: HttpResponse<ApplicantPaginatedResponse>) => {
-        this.dataSource.data = resData.body?.content || [];
-        this.totalRecords = resData.body?.totalElements || 0;
-      }, error: (error: Error) => {
-        this.error.set(error.message);
-      },
-    });
-  }
+    loadApplicants(): void {
+        this.applicantService.getAllApplicants(this.map, this.pageIndex, this.pageSize).subscribe({
+            next: (resData: HttpResponse<ApplicantPaginatedResponse>) => {
+                this.dataSource.data = resData.body?.content || [];
+                this.totalRecords = resData.body?.totalElements || 0;
+            }, error: (error: Error) => {
+                this.error.set(error.message);
+            },
+        });
+    }
 
-  onPaginateChange(event: PageEvent): void {
-    this.pageIndex = event.pageIndex;
-    this.pageSize = event.pageSize;
-    this.loadApplicants();
-  }
+    onPaginateChange(event: PageEvent): void {
+        this.pageIndex = event.pageIndex;
+        this.pageSize = event.pageSize;
+        this.loadApplicants();
+    }
 
-  addApplicant() {
-    this.router.navigate(['/applicants/add']);
-  }
+    addApplicant() {
+        this.router.navigate(['/applicants/add']);
+    }
 
-  editApplicant(id: number): void {
-    this.router.navigate(['/applicants/edit', id]);
-  }
+    editApplicant(id: number): void {
+        this.router.navigate(['/applicants/edit', id]);
+    }
 
-  deleteApplicant(id: number): void {
-    this.router.navigate(['/applicants/remove', id]);
-  }
+    deleteApplicant(id: number): void {
+        this.router.navigate(['/applicants/remove', id]);
+    }
 
-  viewApplicantDetails(row: any): void {
-    this.router.navigate(['/applicants/', row.id]);
-  }
+    viewApplicantDetails(row: any): void {
+        this.router.navigate(['/applicants/', row.id]);
+    }
 
-  filterByColumn(event: Event, column: string): void {
-    const input = event.target as HTMLInputElement;
-    const filterValue = input.value.trim().toLowerCase();
+    filterByColumn(event: Event, column: string): void {
+        const input = event.target as HTMLInputElement;
+        const filterValue = input.value.trim().toLowerCase();
 
-    this.currentFilterColumn = column;
+        this.currentFilterColumn = column;
 
-    this.map.set(this.currentFilterColumn, filterValue);
-
-    this.applicantService.filterApplicants(this.map, this.pageIndex, this.pageSize).subscribe({
-      next: (resData: HttpResponse<ApplicantPaginatedResponse>) => {
-        this.dataSource.data = resData.body?.content || [];
-        this.totalRecords = resData.body?.totalElements || 0;
-        this.dataSource.paginator = this.paginator;
-      }, error: (error: Error) => {
-        this.error.set(error.message);
-      },
-    });
-
-  }
+        this.map.set(this.currentFilterColumn, filterValue);
+        this.loadApplicants();
+    }
 }
